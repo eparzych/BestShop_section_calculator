@@ -120,20 +120,3 @@ for(let i = 0; i < inputForm.length; i++){
 };
 
 
-// packageChoose.addEventListener("click", founction(){
-//     if(selectDropdown.style.display == 'none'){
-//         selectDropdown.style.display = 'inlie-block';
-//         selectDropdown.children[0].addEventListener("click", function(){
-
-//             calcList[2].style.display = 'flex'
-//             calcList[2].children[1].innerText = 'Basic';
-//             calcList[2].children[2].innerText = '$10';
-//             calcTotal[0].style.display = 'block';
-//             total = calcTotal[0].children[1].innerText = total + 10;
-//             if(calcList[2].style.display == 'flex'{
-//                 selectInput.innerText = 'Basic';
-//             })
-//         })
-//     }
-// })
-
