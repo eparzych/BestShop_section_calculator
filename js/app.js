@@ -29,9 +29,20 @@ const prices = {
 function calcTotal(){
     let prodValue = Number(`${products.value * prices.products}`);
     let orderValue = Number(`${orders.value * prices.orders}`);
+    let accValue = 0;
+    let termValue = 0;
     let total = 0;
 
-    total = prodValue + orderValue;
+    if(accounting.checked === true){
+        accValue = prices.accounting;
+        return accValue;
+    }
+    if(terminal.checked === true){
+        termValue = prices.terminal;
+        return accValue;
+    }
+
+    total = prodValue + orderValue + accValue + termValue;
     valueTotalPrice.innerText = total;
     divTotalPrice.style.display = 'block';
 };
@@ -49,7 +60,6 @@ function addOrders(input){
                     elem.innerText = `${input.value} * ${prices.products}` ;
                 }
             });
-            // console.log(el)
 
             const priceArr = Array.from(el.children);
 
@@ -63,46 +73,67 @@ function addOrders(input){
     })
 };
 
+// DODAWANIE KOSZTÓW Z CHECKBOXÓW
 
-// WYBIERANIE ZAMÓWIENIA
-for(let i = 0; i < inputForm.length; i++){
-    inputForm[i].addEventListener('change', function(ev){
-        addOrders(ev.target);
+function addCheckedPrice(input){
+    calcLists.forEach(function(el){
+        if(input.id == el.dataset.id){        
+            el.style.display = 'flex';
+            calcTotal();
+
+            const priceArr = Array.from(el.children);
+
+            priceArr.forEach(function(elem){
+                if(elem.className == "item__price"){
+                    elem.innerText = prices.accounting ;
+                }
+            });
+ 
+        }
     })
 };
 
+// DODAWANIE KOSZTÓW Z CHOOSE PACKAGE
+
+function addChoosePackagePrice(){
+    calcTotal();
+};
 
 
+// WYBIERANIE ZAMÓWIENIA
+for(let i = 0; i < inputForm.length; i++){
+    if(inputForm[i].className == 'calc__input'){
+        inputForm[i].addEventListener('change', function(ev){
+            addOrders(ev.target);
+        })
+    }
+    if(inputForm[i].idName == 'package'){
+        inputForm[i].addEventListener('click', function(ev){
+            addChoosePackagePrice(ev.target);
+        })
+    }
+    if(inputForm[i].className == 'form__checkbox'){
+        inputForm[i].addEventListener('click', function(ev){
+            addCheckedPrice(ev.target);
+        })
+    }
+};
 
-// II SPOSOB
-// function calcTotal(){
-//     divTotalPrice.style.display = 'block';
 
-//     let total = 0;
-//     const prodValue = Number(`${products.value * 0.5}`);
-//     const orderValue = Number(`${orders.value * 0.25}`);
+// packageChoose.addEventListener("click", founction(){
+//     if(selectDropdown.style.display == 'none'){
+//         selectDropdown.style.display = 'inlie-block';
+//         selectDropdown.children[0].addEventListener("click", function(){
 
-//     total = prodValue + orderValue;
-//     valueTotalPrice .innerText = total;
-// };
-
-
-// for(let i = 0; i < inputForm.length; i++){
-//     inputForm[i].addEventListener('change', function(ev){
-//         if((ev.target.value > 0) && (ev.target.value.length > 0) && (ev.target.id == calcLists[i].dataset.id)){
-//             calcLists[i].style.display = 'flex';
-
-
-//             const childrennns = Array.from(calcLists[i].children);
-            
-//             childrennns.forEach(function(el){
-//                 if(el.className == "item__calc"){
-//                     console.log('jestem dzieckiem');
-//                     el.innerText = `${ev.target.value} * 0.5 `;
-//                 }
+//             calcList[2].style.display = 'flex'
+//             calcList[2].children[1].innerText = 'Basic';
+//             calcList[2].children[2].innerText = '$10';
+//             calcTotal[0].style.display = 'block';
+//             total = calcTotal[0].children[1].innerText = total + 10;
+//             if(calcList[2].style.display == 'flex'{
+//                 selectInput.innerText = 'Basic';
 //             })
-//             calcTotal();
-//         }
-//     })
-// };
+//         })
+//     }
+// })
 
