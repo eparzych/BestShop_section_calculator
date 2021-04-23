@@ -27,10 +27,8 @@ const prices = {
 
 // SUMOWANIE KOSZTÓW ZAMÓWIENIA
 function calcTotal(){
-    let priceProducts = 0.5;
-    let priceOrders = 0.25;
-    let prodValue = Number(`${products.value * priceProducts}`);
-    let orderValue = Number(`${orders.value * priceOrders}`);
+    let prodValue = Number(`${products.value * prices.products}`);
+    let orderValue = Number(`${orders.value * prices.orders}`);
     let total = 0;
 
     total = prodValue + orderValue;
@@ -48,16 +46,16 @@ function addOrders(input){
             const orderArr = Array.from(el.children);
             orderArr.forEach(function(elem){
                 if(elem.className == "item__calc"){
-                    // console.log('jestem dzieckiem');
-                    elem.innerText = `${input.value} * 0.5` ;
+                    elem.innerText = `${input.value} * ${prices.products}` ;
                 }
             });
+            // console.log(el)
 
             const priceArr = Array.from(el.children);
+
             priceArr.forEach(function(elem){
                 if(elem.className == "item__price"){
-                    // console.log('jestem portfelem');
-                    elem.innerText = ` ${input.value * prices.products}` ;
+                    elem.innerText = `${input.value * prices.products}` ;
                 }
             });
  
