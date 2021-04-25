@@ -27,19 +27,23 @@ const prices = {
 
 // SUMOWANIE KOSZTÓW ZAMÓWIENIA
 function calcTotal(){
-    let prodValue = Number(`${products.value * prices.products}`);
-    let orderValue = Number(`${orders.value * prices.orders}`);
+    let prodValue = 0;
+    let orderValue = 0;
     let accValue = 0;
     let termValue = 0;
     let total = 0;
 
+    if(products.value > 0){
+        prodValue = Number(`${products.value * prices.products}`);
+    }
+    if(orders.value > 0){
+        orderValue = Number(`${orders.value * prices.orders}`);
+    }
     if(accounting.checked === true){
         accValue = prices.accounting;
-        return accValue;
     }
     if(terminal.checked === true){
         termValue = prices.terminal;
-        return accValue;
     }
 
     total = prodValue + orderValue + accValue + termValue;
@@ -50,24 +54,29 @@ function calcTotal(){
 // DODAWANIE PRODUKTU DO ZAMÓWIENIA
 function addOrders(input){
     calcLists.forEach(function(el){
-        if(input.id == el.dataset.id && input.value > 0 && input.value.length > 0){        
-            el.style.display = 'flex';
+        if(input.id == el.dataset.id){  
+            if(input.value > 0){ 
+                el.style.display = 'flex';
+                 // el.querySelector(".item__calc")
+                const orderArr = Array.from(el.children);
+ 
+                orderArr.forEach(function(elem){
+                    if(elem.className == "item__calc"){
+                        elem.innerText = `${input.value} * ${prices[input.id]}` ;
+                    }
+                });
+
+                const priceArr = Array.from(el.children);
+
+                priceArr.forEach(function(elem){
+                    if(elem.className == "item__price"){
+                        elem.innerText = `${input.value * prices[input.id]}` ;
+                    }
+                });
+            } else {
+                el.style.display = 'none';   
+            }     
             calcTotal();
-
-            const orderArr = Array.from(el.children);
-            orderArr.forEach(function(elem){
-                if(elem.className == "item__calc"){
-                    elem.innerText = `${input.value} * ${prices.products}` ;
-                }
-            });
-
-            const priceArr = Array.from(el.children);
-
-            priceArr.forEach(function(elem){
-                if(elem.className == "item__price"){
-                    elem.innerText = `${input.value * prices.products}` ;
-                }
-            });
  
         }
     })
@@ -78,17 +87,20 @@ function addOrders(input){
 function addCheckedPrice(input){
     calcLists.forEach(function(el){
         if(input.id == el.dataset.id){        
-            el.style.display = 'flex';
+            if(input.checked === true){
+                el.style.display = 'flex';
+
+                const priceArr = Array.from(el.children);
+
+                priceArr.forEach(function(elem){
+                    if(elem.className == "item__price"){
+                        elem.innerText = prices[input.id] ;
+                    }
+                });
+            } else {
+                el.style.display = 'none';
+            }
             calcTotal();
-
-            const priceArr = Array.from(el.children);
-
-            priceArr.forEach(function(elem){
-                if(elem.className == "item__price"){
-                    elem.innerText = prices.accounting ;
-                }
-            });
- 
         }
     })
 };
@@ -118,5 +130,3 @@ for(let i = 0; i < inputForm.length; i++){
         })
     }
 };
-
-
