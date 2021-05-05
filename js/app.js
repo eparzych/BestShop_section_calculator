@@ -134,12 +134,6 @@ for(let i = 0; i < inputForm.length; i++){
 
 selectInput.addEventListener('click', function(ev){
     packageChoose.classList.toggle('open');  
-    if(selectDropdown.style.display === 'block'){
-        selectDropdown.style.display = 'none';
- 
-    }else {
-        selectDropdown.style.display = 'block';
-    }
 });
 
 for(let i = 0; i < selectDropdown.children.length; i++){
