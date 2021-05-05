@@ -63,22 +63,27 @@ function addOrders(input){
         if(input.id == el.dataset.id){  
             if(input.value > 0){ 
                 el.style.display = 'flex';
-                 // el.querySelector(".item__calc")
-                const orderArr = Array.from(el.children);
+
+                const orderArr = el.querySelector(".item__calc");
+                orderArr.innerText = `${input.value} * ${prices[input.id]}`
+
+                // const orderArr = Array.from(el.children);
  
-                orderArr.forEach(function(elem){
-                    if(elem.className == "item__calc"){
-                        elem.innerText = `${input.value} * ${prices[input.id]}` ;
-                    }
-                });
+                // orderArr.forEach(function(elem){
+                //     if(elem.className == "item__calc"){
+                //         elem.innerText = `${input.value} * ${prices[input.id]}`;
+                //     }
+                // });
 
-                const priceArr = Array.from(el.children);
+                const priceArr = el.querySelector(".item__price");
+                priceArr.innerText = `${input.value} * ${prices[input.id]}`
 
-                priceArr.forEach(function(elem){
-                    if(elem.className == "item__price"){
-                        elem.innerText = `${input.value * prices[input.id]}` ;
-                    }
-                });
+                // const priceArr = Array.from(el.children);
+                // priceArr.forEach(function(elem){
+                //     if(elem.className == "item__price"){
+                //         elem.innerText = `${input.value * prices[input.id]}` ;
+                //     }
+                // });
             } else {
                 el.style.display = 'none';   
             }     
@@ -96,13 +101,16 @@ function addCheckedPrice(input){
             if(input.checked === true){
                 el.style.display = 'flex';
 
-                const priceArr = Array.from(el.children);
+                const priceArr = el.querySelector(".item__price");
+                priceArr.innerText = prices[input.id];
 
-                priceArr.forEach(function(elem){
-                    if(elem.className == "item__price"){
-                        elem.innerText = prices[input.id] ;
-                    }
-                });
+                // const priceArr = Array.from(el.children);
+
+                // priceArr.forEach(function(elem){
+                //     if(elem.className == "item__price"){
+                //         elem.innerText = prices[input.id] ;
+                //     }
+                // });
             } else {
                 el.style.display = 'none';
             }
@@ -124,19 +132,26 @@ function addChoosePackagePrice(elem){
         if('package' == el.dataset.id){        
             el.style.display = 'flex';
 
-            const packageArr = Array.from(el.children);
 
-            packageArr.forEach(function(elem){
-                if(elem.className == "item__price"){
-                    elem.innerText = prices.package[selectInput.dataset.value] ;
-                }
-            });
+            const packageArr = el.querySelector(".item__price");
+            packageArr.innerText = prices.package[selectInput.dataset.value];
 
-            packageArr.forEach(function(elem){
-                if(elem.className == "item__calc"){
-                    elem.innerText = selectInput.innerText;
-                }
-            });
+            // const packageArr = Array.from(el.children);
+
+            // packageArr.forEach(function(elem){
+            //     if(elem.className == "item__price"){
+            //         elem.innerText = prices.package[selectInput.dataset.value] ;
+            //     }
+            // });
+
+            const packageArr = el.querySelector(".item__calc");
+            packageArr.innerText = selectInput.innerText;
+
+            // packageArr.forEach(function(elem){
+            //     if(elem.className == "item__calc"){
+            //         elem.innerText = selectInput.innerText;
+            //     }
+            // });
             calcTotal();
         }
     });
@@ -159,7 +174,7 @@ for(let i = 0; i < inputForm.length; i++){
 }
 
 selectInput.addEventListener('click', function(ev){
-    selectDropdown.classList.toggle('dropdown_open');
+    // selectDropdown.classList.toggle('open');
     if(selectDropdown.style.display === 'block'){
         selectDropdown.style.display = 'none';
     }else {
