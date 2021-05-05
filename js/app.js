@@ -4,7 +4,8 @@ const inputForm = Array.from(form.children);
 const products = document.querySelector('#products');
 const orders = document.querySelector('#orders');
 const packageChoose = document.querySelector('#package');
-const selectDropdown = document.querySelector('.select_dropdown');
+const selectInput = document.querySelector('.select__input');
+const selectDropdown = document.querySelector('.select__dropdown');
 const accounting = document.querySelector('#accounting');
 const terminal = document.querySelector('#terminal');
 
@@ -29,15 +30,20 @@ const prices = {
 function calcTotal(){
     let prodValue = 0;
     let orderValue = 0;
+    let dropdownValue = 0;
     let accValue = 0;
     let termValue = 0;
     let total = 0;
 
+
     if(products.value > 0){
-        prodValue = Number(`${products.value * prices.products}`);
+        prodValue = products.value * prices.products;
     }
     if(orders.value > 0){
-        orderValue = Number(`${orders.value * prices.orders}`);
+        orderValue = orders.value * prices.orders;
+    }
+    if(selectInput.dataset.value != null){
+        dropdownValue = prices.package[selectInput.dataset.value];
     }
     if(accounting.checked === true){
         accValue = prices.accounting;
@@ -46,7 +52,7 @@ function calcTotal(){
         termValue = prices.terminal;
     }
 
-    total = prodValue + orderValue + accValue + termValue;
+    total = prodValue + orderValue + dropdownValue + accValue + termValue;
     valueTotalPrice.innerText = total;
     divTotalPrice.style.display = 'block';
 };
@@ -79,8 +85,8 @@ function addOrders(input){
             calcTotal();
  
         }
-    })
-};
+    });
+}
 
 // DODAWANIE KOSZTÓW Z CHECKBOXÓW
 
@@ -102,14 +108,39 @@ function addCheckedPrice(input){
             }
             calcTotal();
         }
-    })
-};
+    });
+}
 
 // DODAWANIE KOSZTÓW Z CHOOSE PACKAGE
 
-function addChoosePackagePrice(){
-    calcTotal();
-};
+function addChoosePackagePrice(elem){
+    // if(elem.dataset.value == 'basic')
+
+    selectInput.dataset.value = elem.dataset.value;
+    selectInput.innerText = elem.innerText;
+    selectDropdown.style.display = 'none';
+
+    calcLists.forEach(function(el){
+        if('package' == el.dataset.id){        
+            el.style.display = 'flex';
+
+            const packageArr = Array.from(el.children);
+
+            packageArr.forEach(function(elem){
+                if(elem.className == "item__price"){
+                    elem.innerText = prices.package[selectInput.dataset.value] ;
+                }
+            });
+
+            packageArr.forEach(function(elem){
+                if(elem.className == "item__calc"){
+                    elem.innerText = selectInput.innerText;
+                }
+            });
+            calcTotal();
+        }
+    });
+}
 
 
 // WYBIERANIE ZAMÓWIENIA
@@ -117,16 +148,27 @@ for(let i = 0; i < inputForm.length; i++){
     if(inputForm[i].className == 'calc__input'){
         inputForm[i].addEventListener('change', function(ev){
             addOrders(ev.target);
-        })
+        });
     }
-    if(inputForm[i].idName == 'package'){
-        inputForm[i].addEventListener('click', function(ev){
-            addChoosePackagePrice(ev.target);
-        })
-    }
+
     if(inputForm[i].className == 'form__checkbox'){
         inputForm[i].addEventListener('click', function(ev){
             addCheckedPrice(ev.target);
-        })
+        });
     }
-};
+}
+
+selectInput.addEventListener('click', function(ev){
+    selectDropdown.classList.toggle('dropdown_open');
+    if(selectDropdown.style.display === 'block'){
+        selectDropdown.style.display = 'none';
+    }else {
+        selectDropdown.style.display = 'block';
+    }
+})
+
+for(let i=0; i< selectDropdown.children.length; i++){
+    selectDropdown.children[i].addEventListener('click', function(ev){
+        addChoosePackagePrice(ev.target);
+    });
+}

@@ -17,6 +17,7 @@
   --nav-font-size: 0.6875rem;
 }
 
+
 @mixin notebook {
   @media (max-width: 1352px) {
     @content;
@@ -992,6 +993,10 @@ background-color: var(--color-primary);
         right: 14px;
         top: 9px;
       }
+
+      // .dropdown_open::after {
+      //   transform: rotate(180deg);
+      // }
     }
 
     .select__dropdown {
