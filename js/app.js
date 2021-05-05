@@ -12,7 +12,6 @@ const terminal = document.querySelector('#terminal');
 const calcSummary = document.querySelector('.calc__summary ul');
 const calcLists = Array.from(document.querySelectorAll('ul .list__item'));
 const divTotalPrice = document.querySelector('#total-price');
-let valueTotalPrice = document.querySelector('.total__price');
 
 const prices = {
     products: 0.5,
@@ -134,8 +133,7 @@ for(let i = 0; i < inputForm.length; i++){
 }
 
 selectInput.addEventListener('click', function(ev){
-    packageChoose.classList.toggle('open');
-    
+    packageChoose.classList.toggle('open');  
     if(selectDropdown.style.display === 'block'){
         selectDropdown.style.display = 'none';
  
