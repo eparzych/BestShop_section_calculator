@@ -6,13 +6,13 @@ const orders = document.querySelector('#orders');
 const packageChoose = document.querySelector('#package');
 const selectInput = document.querySelector('.select__input');
 const selectDropdown = document.querySelector('.select__dropdown');
+const dropdownOptions = Array.from(selectDropdown.children);
 const accounting = document.querySelector('#accounting');
 const terminal = document.querySelector('#terminal');
 
 const calcSummary = document.querySelector('.calc__summary ul');
 const calcLists = Array.from(document.querySelectorAll('ul .list__item'));
 const divTotalPrice = document.querySelector('#total-price');
-let valueTotalPrice = document.querySelector('.total__price');
 
 const prices = {
     products: 0.5,
@@ -101,7 +101,7 @@ function addChoosePackagePrice(elem){
 
     selectInput.dataset.value = elem.dataset.value;
     selectInput.innerText = elem.innerText;
-    selectDropdown.style.display = 'none';
+    packageChoose.classList.remove('open');
 
     calcLists.forEach(function(el){
         if('package' == el.dataset.id){        
@@ -137,8 +137,8 @@ selectInput.addEventListener('click', function(ev){
     packageChoose.classList.toggle('open');
 });
 
-for(let i = 0; i < selectDropdown.children.length; i++){
-    selectDropdown.children[i].addEventListener('click', function(ev){
+dropdownOptions.forEach(function(option){
+    option.addEventListener('click', function(ev){
         addChoosePackagePrice(ev.target);
     });
-}
+});
