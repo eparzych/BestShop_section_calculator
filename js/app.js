@@ -64,53 +64,30 @@ function addOrders(input){
             if(input.value > 0){ 
                 el.style.display = 'flex';
 
-                const orderArr = el.querySelector(".item__calc");
-                orderArr.innerText = `${input.value} * ${prices[input.id]}`
+                const ordersCalc = el.querySelector(".item__calc");
+                ordersCalc.innerText = `${input.value} * ${prices[input.id]}`
 
-                // const orderArr = Array.from(el.children);
- 
-                // orderArr.forEach(function(elem){
-                //     if(elem.className == "item__calc"){
-                //         elem.innerText = `${input.value} * ${prices[input.id]}`;
-                //     }
-                // });
+                const ordersPrice = el.querySelector(".item__price");
+                ordersPrice.innerText = `${input.value * prices[input.id]}`
 
-                const priceArr = el.querySelector(".item__price");
-                priceArr.innerText = `${input.value} * ${prices[input.id]}`
-
-                // const priceArr = Array.from(el.children);
-                // priceArr.forEach(function(elem){
-                //     if(elem.className == "item__price"){
-                //         elem.innerText = `${input.value * prices[input.id]}` ;
-                //     }
-                // });
             } else {
                 el.style.display = 'none';   
             }     
             calcTotal();
- 
         }
     });
 }
 
 // DODAWANIE KOSZTÓW Z CHECKBOXÓW
-
 function addCheckedPrice(input){
     calcLists.forEach(function(el){
         if(input.id == el.dataset.id){        
             if(input.checked === true){
                 el.style.display = 'flex';
 
-                const priceArr = el.querySelector(".item__price");
-                priceArr.innerText = prices[input.id];
+                const priceCheckbox = el.querySelector(".item__price");
+                priceCheckbox.innerText = prices[input.id];
 
-                // const priceArr = Array.from(el.children);
-
-                // priceArr.forEach(function(elem){
-                //     if(elem.className == "item__price"){
-                //         elem.innerText = prices[input.id] ;
-                //     }
-                // });
             } else {
                 el.style.display = 'none';
             }
@@ -120,9 +97,7 @@ function addCheckedPrice(input){
 }
 
 // DODAWANIE KOSZTÓW Z CHOOSE PACKAGE
-
 function addChoosePackagePrice(elem){
-    // if(elem.dataset.value == 'basic')
 
     selectInput.dataset.value = elem.dataset.value;
     selectInput.innerText = elem.innerText;
@@ -132,31 +107,16 @@ function addChoosePackagePrice(elem){
         if('package' == el.dataset.id){        
             el.style.display = 'flex';
 
+            const packagePrice = el.querySelector(".item__price");
+            packagePrice.innerText = prices.package[selectInput.dataset.value];
 
-            const packageArr = el.querySelector(".item__price");
-            packageArr.innerText = prices.package[selectInput.dataset.value];
+            const packageCalc = el.querySelector(".item__calc");
+            packageCalc.innerText = selectInput.innerText;
 
-            // const packageArr = Array.from(el.children);
-
-            // packageArr.forEach(function(elem){
-            //     if(elem.className == "item__price"){
-            //         elem.innerText = prices.package[selectInput.dataset.value] ;
-            //     }
-            // });
-
-            const packageArr = el.querySelector(".item__calc");
-            packageArr.innerText = selectInput.innerText;
-
-            // packageArr.forEach(function(elem){
-            //     if(elem.className == "item__calc"){
-            //         elem.innerText = selectInput.innerText;
-            //     }
-            // });
             calcTotal();
         }
     });
 }
-
 
 // WYBIERANIE ZAMÓWIENIA
 for(let i = 0; i < inputForm.length; i++){
@@ -174,15 +134,17 @@ for(let i = 0; i < inputForm.length; i++){
 }
 
 selectInput.addEventListener('click', function(ev){
-    // selectDropdown.classList.toggle('open');
+    packageChoose.classList.toggle('open');
+    
     if(selectDropdown.style.display === 'block'){
         selectDropdown.style.display = 'none';
+ 
     }else {
         selectDropdown.style.display = 'block';
     }
-})
+});
 
-for(let i=0; i< selectDropdown.children.length; i++){
+for(let i = 0; i < selectDropdown.children.length; i++){
     selectDropdown.children[i].addEventListener('click', function(ev){
         addChoosePackagePrice(ev.target);
     });
