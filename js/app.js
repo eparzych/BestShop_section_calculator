@@ -119,19 +119,19 @@ function addChoosePackagePrice(elem){
 }
 
 // WYBIERANIE ZAMÓWIENIA
-for(let i = 0; i < inputForm.length; i++){
-    if(inputForm[i].className == 'calc__input'){
-        inputForm[i].addEventListener('change', function(ev){
+inputForm.forEach(function(input){
+    if(input.className == 'calc__input'){
+        input.addEventListener('change', function(ev){
             addOrders(ev.target);
         });
     }
 
-    if(inputForm[i].className == 'form__checkbox'){
-        inputForm[i].addEventListener('click', function(ev){
+    if(input.className == 'form__checkbox'){
+        input.addEventListener('click', function(ev){
             addCheckedPrice(ev.target);
         });
     }
-}
+})
 
 selectInput.addEventListener('click', function(ev){
     packageChoose.classList.toggle('open');
