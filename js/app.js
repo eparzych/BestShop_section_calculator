@@ -125,6 +125,11 @@ inputForm.forEach(function(input){
         input.addEventListener('change', function(ev){
             addOrders(ev.target);
         });
+
+        input.addEventListener('keyup', function(ev){
+            addOrders(ev.target);
+        });
+
     }
 
     if(input.className == 'form__checkbox'){
