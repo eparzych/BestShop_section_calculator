@@ -141,6 +141,7 @@ inputForm.forEach(function(input){
 
 selectInput.addEventListener('click', function(ev){
     packageChoose.classList.toggle('open');
+    console.log(packageChoose);
 });
 
 dropdownOptions.forEach(function(option){
