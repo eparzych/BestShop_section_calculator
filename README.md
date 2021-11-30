@@ -12,6 +12,7 @@ The project is an improved version of the earlier BestShop project. Added SASS s
 - JavaScript.
 
 ## Screenshots
+![Screenshot 1](assets/screenshot1.png)
 
 ## Setup
 - gulp
